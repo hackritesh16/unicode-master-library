@@ -2,29 +2,21 @@
 
 **Explore • Combine • Design • Create**
 
-An offline-first Android app (Flutter) for exploring the Unicode character database, experimenting with combining marks, and designing decorated Unicode text and names.
+An offline-first Android app (Flutter) for exploring Unicode characters, experimenting with combining marks, and designing decorated Unicode text and names.
 
-> **Status:** Phases 1–5 implemented; CI passing through Phase 4, Phase 5 awaiting CI and on-device verification. See [docs/PLAN.md](docs/PLAN.md) for progress.
+> **Status:** Phases 1–6 implemented; CI verification in progress. Physical Android verification and the first full Unicode database import remain outstanding. See [docs/PLAN.md](docs/PLAN.md) for progress.
 
-## Planned features
+## Features
 
-- Unicode database built from official UCD data (see [SOURCES.md](SOURCES.md))
-- Unicode Explorer with search by character, name, code point, block, script, category
-- Combining Marks Laboratory (interactive initial mark set)
-- Name Studio (themed design generator)
-- Decorative Composer
-- Emoji library, favorites, history, export
+- Unicode database pipeline based on official UCD data (see [SOURCES.md](SOURCES.md))
+- Unicode Explorer with search by character, name, code point, block, script and category
+- Combining Marks Laboratory with live preview and curated marks
+- Name Studio with five Unicode styles, search and one-tap copy
+- Decorative Composer, emoji/symbol library, favorites and history are planned
 
 ## Getting started
 
-This repository contains `lib/`, `pubspec.yaml` and CI config but not the generated Android platform folder. Generate it once:
-
-```bash
-flutter create --platforms=android --project-name unicode_master_library .
-flutter pub get
-flutter test
-flutter run
-```
+The generated Android platform folder is not committed. Generate it once with the Flutter create command, then run flutter pub get, flutter test and flutter run.
 
 ## Documentation
 
