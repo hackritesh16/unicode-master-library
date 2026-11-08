@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:unicode_master_library/core/unicode/ucd_bundle.dart';
+import 'package:unicode_master_library/core/unicode/ucd_parsers.dart';
 import 'package:unicode_master_library/database/unicode_importer.dart';
 import 'package:unicode_master_library/database/unicode_schema.dart';
 
@@ -131,10 +132,14 @@ void main() {
     final importer = UnicodeImporter(db);
     await importer.importParsed(parsed);
 
-    // Two rows with the same primary key make the batch insert fail midway.
+    // The same code point twice violates the primary key mid-import.
+    final chars = parsed.unicodeData.characters;
     final broken = ParsedUcd(
       version: '100.0.0',
-      unicodeData: UnicodeDataParseResultFixture.duplicateKey(parsed),
+      unicodeData: UnicodeDataParseResult(
+        [...chars, chars.first],
+        parsed.unicodeData.ranges,
+      ),
       blocks: parsed.blocks,
       scripts: parsed.scripts,
       ages: parsed.ages,
@@ -149,26 +154,4 @@ void main() {
     expect(await readMeta(db, 'unicode_version'), '99.0.0');
     expect(await _count(db, 'characters'), 5);
   });
-}
-
-/// Builds a UnicodeData result containing the same code point twice.
-class UnicodeDataParseResultFixture {
-  static dynamic duplicateKey(ParsedUcd parsed) {
-    final chars = [...parsed.unicodeData.characters, parsed.unicodeData.characters.first];
-    return _build(chars, parsed);
-  }
-
-  static dynamic _build(List chars, ParsedUcd parsed) {
-    // Imported lazily to keep the helper compact.
-    return _Result(
-      List.of(chars.cast()),
-      parsed.unicodeData.ranges,
-    );
-  }
-}
-
-class _Result implements dynamic {
-  _Result(this.characters, this.ranges);
-  final List characters;
-  final List ranges;
 }
