@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/unicode/name_styles.dart';
+import '../../../services/library_storage_service.dart';
 
 class NameStudioScreen extends StatefulWidget {
   const NameStudioScreen({super.key});
@@ -18,6 +20,12 @@ class _NameStudioScreenState extends State<NameStudioScreen> {
   void dispose() { _controller.removeListener(_changed); _controller.dispose(); super.dispose(); }
   Future<void> _copy(String value) async {
     await Clipboard.setData(ClipboardData(text: value));
+    final preferences = await SharedPreferences.getInstance();
+    await LibraryStorageService(preferences).addHistory(
+      kind: 'name-style',
+      title: 'Styled name',
+      content: value,
+    );
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Style copied to clipboard')));
   }
