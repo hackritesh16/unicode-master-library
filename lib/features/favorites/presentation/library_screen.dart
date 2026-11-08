@@ -64,6 +64,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   Future<void> _copy(LibraryEntry entry) async {
     await Clipboard.setData(ClipboardData(text: entry.content));
+    await _storage?.addHistory(
+      kind: entry.kind,
+      title: entry.title,
+      content: entry.content,
+    );
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Copied from Library')),
