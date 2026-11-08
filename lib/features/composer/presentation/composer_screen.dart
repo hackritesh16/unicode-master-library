@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -84,7 +86,7 @@ class _ComposerScreenState extends State<ComposerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GlassAppBar(
         title: const Text('Decorative Composer'),
         actions: [
           IconButton(
@@ -217,18 +219,19 @@ class _ComposerScreenState extends State<ComposerScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: FilledButton.icon(
+                      child: GlassButton(
+                        label: 'Copy',
+                        icon: Icons.copy_rounded,
+                        filled: true,
                         onPressed: _output.isEmpty ? null : _copyOutput,
-                        icon: const Icon(Icons.copy_rounded),
-                        label: const Text('Copy'),
                       ),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child: OutlinedButton.icon(
+                      child: GlassButton(
+                        label: 'Save',
+                        icon: Icons.bookmark_add_outlined,
                         onPressed: _output.isEmpty ? null : _saveOutput,
-                        icon: const Icon(Icons.bookmark_add_outlined),
-                        label: const Text('Save'),
                       ),
                     ),
                   ],
