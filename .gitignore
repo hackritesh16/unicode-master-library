@@ -1,4 +1,22 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+*.iml
+.idea/
+.vscode/
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# Generated Unicode database (reproduce with tools/)
+data/unicode/raw/
 *.sqlite
 *.db
-.dart_tool/
-build/
