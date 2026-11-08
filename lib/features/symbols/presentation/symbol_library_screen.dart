@@ -53,9 +53,11 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
     if (storage == null) return;
     final isSaved = _favoriteGlyphs.contains(item.glyph);
     if (isSaved) {
-      final entry = storage.getFavorites().where((value) =>
-          value.kind == 'symbol' && value.content == item.glyph).firstOrNull;
-      if (entry != null) await storage.removeFavorite(entry.id);
+      final matches = storage.getFavorites().where((value) =>
+          value.kind == 'symbol' && value.content == item.glyph);
+      if (matches.isNotEmpty) {
+        await storage.removeFavorite(matches.first.id);
+      }
     } else {
       await storage.addFavorite(kind: 'symbol', title: item.name, content: item.glyph);
     }
@@ -77,6 +79,11 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
 
   Future<void> _copy(LibrarySymbol item) async {
     await Clipboard.setData(ClipboardData(text: item.glyph));
+    await _storage?.addHistory(
+      kind: 'symbol',
+      title: item.name,
+      content: item.glyph,
+    );
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${item.name} copied')),
@@ -174,6 +181,22 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                IconButton(
+                                  tooltip: _favoriteGlyphs.contains(item.glyph)
+                                      ? 'Remove favorite'
+                                      : 'Add favorite',
+                                  visualDensity: VisualDensity.compact,
+                                  onPressed: _storage == null
+                                      ? null
+                                      : () => _toggleFavorite(item),
+                                  icon: Icon(
+                                    _favoriteGlyphs.contains(item.glyph)
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: AppColors.primary,
+                                    size: 18,
+                                  ),
+                                ),
                                 Text(item.glyph,
                                     style: const TextStyle(fontSize: 29)),
                                 const SizedBox(height: 6),
