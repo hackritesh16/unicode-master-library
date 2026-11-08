@@ -8,7 +8,7 @@
 | 4 | Unicode Explorer | Implemented; CI/device verification pending |
 | 5 | Combining Marks Laboratory | Implemented; CI/device verification pending |
 | 6 | Name Designer | Implemented; CI verification pending |
-| 7 | Decorative Composer | Not started |
+| 7 | Decorative Composer | Implemented; CI verification pending |
 | 8 | Emoji and symbol libraries | Not started |
 | 9 | Favorites, history, persistence | Not started |
 | 10 | UI polish, glass design system, testing, optimization and release | Not started |
@@ -21,6 +21,13 @@
 - Characters without a mapping are preserved.
 - Compatibility note explains that glyph support depends on device fonts and apps.
 - Unit tests cover mappings and unsupported-character preservation; widget test covers editing and preview.
+
+## Phase 7 — Decorative Composer
+
+- Live text editor with a curated collection of six Unicode decoration frames.
+- Custom prefix and suffix fields override each frame independently.
+- Instant preview, reset action and one-tap copy.
+- Unit tests cover preset formatting, custom overrides and empty input; widget test covers live editing and frame selection.
 
 ## UI design requirement — premium dark glass
 
