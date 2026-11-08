@@ -17,12 +17,16 @@ void main() {
     await tester.pumpWidget(const ProviderScope(child: UnicodeMasterApp()));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.explore_outlined));
+    final bar = find.byType(NavigationBar);
+    expect(tester.widget<NavigationBar>(bar).selectedIndex, 0);
+
+    await tester.tap(
+      find.descendant(of: bar, matching: find.text('Explorer')),
+    );
     await tester.pumpAndSettle();
 
-    // Explorer is now selected: its filled icon shows in the nav bar
-    // and in the screen's placeholder badge.
-    expect(find.byIcon(Icons.explore_rounded), findsWidgets);
-    expect(find.byType(AppBar), findsOneWidget);
+    // Assert on the navigation state rather than on icon widgets, which the
+    // design system is free to restyle.
+    expect(tester.widget<NavigationBar>(bar).selectedIndex, 1);
   });
 }
