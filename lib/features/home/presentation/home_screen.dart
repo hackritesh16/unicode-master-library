@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: GlassAppBar(title: const Text('Unicode Master Library')),
+      appBar: const GlassAppBar(title: Text('Unicode Master Library')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
