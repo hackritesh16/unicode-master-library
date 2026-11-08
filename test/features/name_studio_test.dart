@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:unicode_master_library/features/name_studio/presentation/name_studio_screen.dart';
 void main() {
   testWidgets('Name Studio previews styles and accepts edited text', (tester) async {
-    tester.view.physicalSize = const Size(900, 1600;
+    tester.view.physicalSize = const Size(900, 1600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
