@@ -8,11 +8,16 @@ import '../../features/favorites/presentation/library_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/name_studio/presentation/name_studio_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/symbols/presentation/symbol_library_screen.dart';
 import '../../shared/widgets/app_shell.dart';
 
 StatefulShellBranch _branch(String path, Widget screen) {
   return StatefulShellBranch(
     routes: [
+      GoRoute(
+        path: '/symbols',
+        builder: (context, state) => const SymbolLibraryScreen(),
+      ),
       GoRoute(path: path, builder: (context, state) => screen),
     ],
   );
