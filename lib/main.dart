@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: UnicodeMasterApp()));
 }
 
-/// Phase 1 shell only. Theme, navigation and screens arrive in Phase 2+.
-class UnicodeMasterApp extends StatelessWidget {
+class UnicodeMasterApp extends StatefulWidget {
   const UnicodeMasterApp({super.key});
 
   @override
+  State<UnicodeMasterApp> createState() => _UnicodeMasterAppState();
+}
+
+class _UnicodeMasterAppState extends State<UnicodeMasterApp> {
+  late final GoRouter _router = createRouter();
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Unicode Master Library',
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      home: const Scaffold(
-        body: Center(child: Text('Unicode Master Library')),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: buildAppTheme(),
+      routerConfig: _router,
     );
   }
 }
