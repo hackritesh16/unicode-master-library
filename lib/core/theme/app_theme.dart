@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 /// Builds the app-wide dark Material 3 theme.
+///
+/// Scaffolds are transparent on purpose: `GlassBackground` (installed through
+/// `MaterialApp.builder`) paints the ambient backdrop behind every screen so
+/// glass surfaces have something to blur.
 ThemeData buildAppTheme() {
   const scheme = ColorScheme.dark(
     primary: AppColors.primary,
@@ -19,7 +23,7 @@ ThemeData buildAppTheme() {
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: scheme,
-    scaffoldBackgroundColor: AppColors.background,
+    scaffoldBackgroundColor: Colors.transparent,
   );
 
   return base.copyWith(
@@ -40,7 +44,7 @@ ThemeData buildAppTheme() {
     ),
     navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: Colors.transparent,
-      indicatorColor: Color(0x338B5CF6),
+      indicatorColor: Color(0x598B5CF6),
       height: 68,
     ),
     snackBarTheme: const SnackBarThemeData(
