@@ -16,6 +16,7 @@ void main() {
     await tester.pump();
     expect(find.text('✦ NK Player ✦'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('Royal'));
     await tester.tap(find.text('Royal'));
     await tester.pump();
     expect(find.text('꧁༺ NK Player ༻꧂'), findsOneWidget);
