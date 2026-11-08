@@ -14,10 +14,6 @@ import '../../shared/widgets/app_shell.dart';
 StatefulShellBranch _branch(String path, Widget screen) {
   return StatefulShellBranch(
     routes: [
-      GoRoute(
-        path: '/symbols',
-        builder: (context, state) => const SymbolLibraryScreen(),
-      ),
       GoRoute(path: path, builder: (context, state) => screen),
     ],
   );
@@ -31,6 +27,10 @@ GoRouter createRouter() {
       GoRoute(
         path: '/combining',
         builder: (context, state) => const CombiningLabScreen(),
+      ),
+      GoRoute(
+        path: '/symbols',
+        builder: (context, state) => const SymbolLibraryScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
