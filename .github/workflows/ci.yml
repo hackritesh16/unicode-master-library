@@ -20,6 +20,8 @@ jobs:
         run: |
           if [ ! -d android ]; then
             flutter create --platforms=android --project-name unicode_master_library .
+            # flutter create writes a counter-app test that references a class we do not have.
+            rm -f test/widget_test.dart
           fi
       - run: flutter pub get
       - run: flutter analyze
