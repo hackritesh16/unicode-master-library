@@ -20,14 +20,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: const GlassAppBar(title: Text('Unicode Master Library')),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        // Extra bottom padding keeps the last card clear of the floating
+        // glass navigation bar.
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 110),
         children: [
-          Container(
+          GlassSurface(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: AppColors.accentGradient,
-              borderRadius: BorderRadius.circular(22),
-            ),
+            radius: 24,
+            blurSigma: 26,
+            tint: AppColors.primary.withValues(alpha: 0.38),
+            borderColor: const Color(0x73FFFFFF),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,18 +51,20 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   )),
           const SizedBox(height: 10),
-          ...actions.map((action) => Card(
-                color: AppColors.surface,
-                margin: const EdgeInsets.only(bottom: 9),
-                child: ListTile(
-                  onTap: () => context.go(action.route),
-                  leading: CircleAvatar(
-                    backgroundColor: AppColors.surfaceHigh,
-                    child: Icon(action.icon, color: AppColors.primary),
+          ...actions.map((action) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: GlassSurface(
+                  padding: EdgeInsets.zero,
+                  child: ListTile(
+                    onTap: () => context.go(action.route),
+                    leading: CircleAvatar(
+                      backgroundColor: const Color(0x33FFFFFF),
+                      child: Icon(action.icon, color: Colors.white),
+                    ),
+                    title: Text(action.title),
+                    subtitle: Text(action.subtitle),
+                    trailing: const Icon(Icons.chevron_right_rounded),
                   ),
-                  title: Text(action.title),
-                  subtitle: Text(action.subtitle),
-                  trailing: const Icon(Icons.chevron_right_rounded),
                 ),
               )),
         ],
