@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/composer/presentation/composer_screen.dart';
+import '../../features/combining/presentation/combining_lab_screen.dart';
 import '../../features/explorer/presentation/explorer_screen.dart';
 import '../../features/favorites/presentation/library_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
@@ -22,6 +23,10 @@ GoRouter createRouter() {
   return GoRouter(
     initialLocation: '/home',
     routes: [
+      GoRoute(
+        path: '/combining',
+        builder: (context, state) => const CombiningLabScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
