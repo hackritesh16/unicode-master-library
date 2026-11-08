@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:unicode_master_library/features/combining/presentation/combining_lab_screen.dart';
 void main() {
   testWidgets('Combining Lab lets users add and remove marks', (tester) async {
-    tester.view.physicalSize = const Size(900, 1800;
+    tester.view.physicalSize = const Size(900, 1800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
