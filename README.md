@@ -4,7 +4,7 @@
 
 An offline-first Android app (Flutter) for exploring the Unicode character database, experimenting with combining marks, and designing decorated Unicode text and names.
 
-> **Status:** Phase 1 of 10 (architecture and scaffold). No user-facing features are implemented yet. See [docs/PLAN.md](docs/PLAN.md) for progress.
+> **Status:** Phases 1–4 implemented; Unicode Explorer is awaiting CI and on-device verification. See [docs/PLAN.md](docs/PLAN.md) for progress.
 
 ## Planned features
 
