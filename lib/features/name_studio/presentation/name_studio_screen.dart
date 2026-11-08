@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/theme/app_colors.dart';
@@ -34,7 +36,7 @@ class _NameStudioScreenState extends State<NameStudioScreen> {
     final input = _controller.text;
     final styles = nameStyles.where((s) => _query.isEmpty || s.label.toLowerCase().contains(_query.toLowerCase())).toList();
     return Scaffold(
-      appBar: AppBar(title: const Text('Name Studio'), actions: [
+      appBar: GlassAppBar(title: const Text('Name Studio'), actions: [
         IconButton(tooltip: 'Clear name', onPressed: input.isEmpty ? null : _controller.clear, icon: const Icon(Icons.clear_rounded)),
       ]),
       body: ListView(padding: const EdgeInsets.all(16), children: [
