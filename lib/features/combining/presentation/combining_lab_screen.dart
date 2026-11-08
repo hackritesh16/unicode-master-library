@@ -165,7 +165,6 @@ class _CombiningLabScreenState extends State<CombiningLabScreen> {
               ),
               style: const TextStyle(
                 color: AppColors.secondary,
-                fontFeatures: [],
               ),
             ),
           ],
