@@ -4,7 +4,7 @@
 
 An offline-first Android app (Flutter) for exploring Unicode characters, experimenting with combining marks, and designing decorated Unicode text and names.
 
-> **Status:** Phases 1–6 implemented; CI verification in progress. Physical Android verification and the first full Unicode database import remain outstanding. See [docs/PLAN.md](docs/PLAN.md) for progress.
+> **Status:** Phases 1–7 implemented; CI verification in progress. Physical Android verification and the first full Unicode database import remain outstanding. See [docs/PLAN.md](docs/PLAN.md) for progress.
 
 ## Features
 
@@ -12,7 +12,8 @@ An offline-first Android app (Flutter) for exploring Unicode characters, experim
 - Unicode Explorer with search by character, name, code point, block, script and category
 - Combining Marks Laboratory with live preview and curated marks
 - Name Studio with five Unicode styles, search and one-tap copy
-- Decorative Composer, emoji/symbol library, favorites and history are planned
+- Decorative Composer with six frames, custom prefix/suffix and live preview
+- Emoji/symbol library, favorites and history are planned
 
 ## Getting started
 
