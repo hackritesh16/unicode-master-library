@@ -47,17 +47,21 @@ class AppShell extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       body: navigationShell,
-      bottomNavigationBar: GlassSurface(
-        padding: EdgeInsets.zero,
-        radius: 22,
-        tint: const Color(0xD414141F),
-        child: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        destinations: _destinations,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+        child: GlassSurface(
+          padding: EdgeInsets.zero,
+          radius: 26,
+          blurSigma: 28,
+          tint: const Color(0x6614141F),
+          child: NavigationBar(
+            selectedIndex: navigationShell.currentIndex,
+            destinations: _destinations,
+            onDestinationSelected: (index) => navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            ),
+          ),
         ),
       ),
     );
