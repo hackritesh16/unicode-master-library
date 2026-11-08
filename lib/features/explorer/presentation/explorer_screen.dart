@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../database/unicode_explorer_repository.dart';
 import '../../../providers/unicode_db_provider.dart';
+import '../../../shared/widgets/glass_widgets.dart';
 
 class ExplorerScreen extends ConsumerStatefulWidget {
   const ExplorerScreen({super.key});
