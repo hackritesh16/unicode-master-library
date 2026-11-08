@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../domain/composer_preset.dart';
+import '../../../services/library_storage_service.dart';
 
 class ComposerScreen extends StatefulWidget {
   const ComposerScreen({super.key});
@@ -53,9 +55,29 @@ class _ComposerScreenState extends State<ComposerScreen> {
 
   Future<void> _copyOutput() async {
     await Clipboard.setData(ClipboardData(text: _output));
+    final preferences = await SharedPreferences.getInstance();
+    await LibraryStorageService(preferences).addHistory(
+      kind: 'text',
+      title: 'Decorated text',
+      content: _output,
+    );
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Decorated text copied')),
+    );
+  }
+
+  Future<void> _saveOutput() async {
+    if (_output.isEmpty) return;
+    final preferences = await SharedPreferences.getInstance();
+    await LibraryStorageService(preferences).addFavorite(
+      kind: 'text',
+      title: 'Decorated text',
+      content: _output,
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Saved to Favorites')),
     );
   }
 
@@ -192,13 +214,24 @@ class _ComposerScreenState extends State<ComposerScreen> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: _output.isEmpty ? null : _copyOutput,
-                    icon: const Icon(Icons.copy_rounded),
-                    label: const Text('Copy decorated text'),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: _output.isEmpty ? null : _copyOutput,
+                        icon: const Icon(Icons.copy_rounded),
+                        label: const Text('Copy'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _output.isEmpty ? null : _saveOutput,
+                        icon: const Icon(Icons.bookmark_add_outlined),
+                        label: const Text('Save'),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
