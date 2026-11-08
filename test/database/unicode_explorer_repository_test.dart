@@ -45,6 +45,11 @@ void main() {
   test('accepts U+ notation and literal characters', () async {
     expect((await explorer.search('U+0905')).single.codePoint, 0x905);
     expect((await explorer.search('अ')).single.codePoint, 0x905);
+    expect((await explorer.search('A')).single.codePoint, 0x41);
+  });
+
+  test('searches by general category', () async {
+    expect((await explorer.search('Lu')).single.codePoint, 0x41);
   });
 
   test('finds unexpanded Unicode ranges by code point', () async {
