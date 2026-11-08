@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'glass_widgets.dart';
+
 /// Scaffold with the bottom navigation bar shared by the six main sections.
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.navigationShell});
@@ -43,13 +45,19 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: GlassSurface(
+        padding: EdgeInsets.zero,
+        radius: 22,
+        tint: const Color(0xD414141F),
+        child: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: _destinations,
         onDestinationSelected: (index) => navigationShell.goBranch(
           index,
           initialLocation: index == navigationShell.currentIndex,
+        ),
         ),
       ),
     );
