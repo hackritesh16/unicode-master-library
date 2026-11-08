@@ -16,7 +16,8 @@ void main() {
 
     await tester.enterText(find.byType(TextField), 'Blue heart');
     await tester.pump();
-    expect(find.text('Blue heart'), findsOneWidget);
+    // The query appears in the editable field and once in the filtered grid.
+    expect(find.text('Blue heart'), findsNWidgets(2));
     expect(find.text('Red heart'), findsNothing);
   });
 }
