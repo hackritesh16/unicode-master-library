@@ -76,6 +76,11 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
         title: const Text('Unicode Explorer'),
         actions: [
           IconButton(
+            tooltip: 'Combining Marks Lab',
+            onPressed: () => context.push('/combining'),
+            icon: const Icon(Icons.science_outlined),
+          ),
+          IconButton(
             tooltip: 'Refresh',
             onPressed: database.hasValue ? _search : null,
             icon: const Icon(Icons.refresh_rounded),
