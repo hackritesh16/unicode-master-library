@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,7 +81,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     final entries = _tab == 0 ? _favorites : _history;
     return Scaffold(
-      appBar: AppBar(
+      appBar: GlassAppBar(
         title: const Text('My Library'),
         actions: [
           if (_tab == 1 && _history.isNotEmpty)
