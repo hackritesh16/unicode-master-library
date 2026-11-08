@@ -28,7 +28,7 @@ ThemeData buildAppTheme() {
       displayColor: AppColors.textPrimary,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
@@ -39,7 +39,7 @@ ThemeData buildAppTheme() {
       ),
     ),
     navigationBarTheme: const NavigationBarThemeData(
-      backgroundColor: AppColors.surface,
+      backgroundColor: Colors.transparent,
       indicatorColor: Color(0x338B5CF6),
       height: 68,
     ),
