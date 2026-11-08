@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../services/library_storage_service.dart';
 import '../domain/symbol_library_data.dart';
 
 class SymbolLibraryScreen extends StatefulWidget {
@@ -15,6 +17,8 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
   final _searchController = TextEditingController();
   String _category = 'All';
   String _query = '';
+  LibraryStorageService? _storage;
+  Set<String> _favoriteGlyphs = {};
 
   List<LibrarySymbol> get _visibleSymbols => librarySymbols.where((item) {
         final matchesCategory =
@@ -24,6 +28,46 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
             item.glyph.contains(_query);
         return matchesCategory && matchesQuery;
       }).toList();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeStorage();
+  }
+
+  Future<void> _initializeStorage() async {
+    final preferences = await SharedPreferences.getInstance();
+    final storage = LibraryStorageService(preferences);
+    if (!mounted) return;
+    setState(() {
+      _storage = storage;
+      _favoriteGlyphs = storage.getFavorites()
+          .where((entry) => entry.kind == 'symbol')
+          .map((entry) => entry.content)
+          .toSet();
+    });
+  }
+
+  Future<void> _toggleFavorite(LibrarySymbol item) async {
+    final storage = _storage;
+    if (storage == null) return;
+    final isSaved = _favoriteGlyphs.contains(item.glyph);
+    if (isSaved) {
+      final entry = storage.getFavorites().where((value) =>
+          value.kind == 'symbol' && value.content == item.glyph).firstOrNull;
+      if (entry != null) await storage.removeFavorite(entry.id);
+    } else {
+      await storage.addFavorite(kind: 'symbol', title: item.name, content: item.glyph);
+    }
+    if (!mounted) return;
+    setState(() {
+      if (isSaved) {
+        _favoriteGlyphs.remove(item.glyph);
+      } else {
+        _favoriteGlyphs.add(item.glyph);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -120,6 +164,7 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(14),
                           onTap: () => _copy(item),
+                          onLongPress: () => _toggleFavorite(item),
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14),
