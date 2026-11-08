@@ -39,7 +39,7 @@ class SettingsScreen extends ConsumerWidget {
         state.latestVersion != state.installedVersion;
 
     return Scaffold(
-      appBar: GlassAppBar(title: const Text('Settings')),
+      appBar: const GlassAppBar(title: Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
