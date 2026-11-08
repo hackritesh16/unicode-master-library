@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -72,7 +74,7 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
     });
     final database = ref.watch(unicodeDatabaseProvider);
     return Scaffold(
-      appBar: AppBar(
+      appBar: GlassAppBar(
         title: const Text('Unicode Explorer'),
         actions: [
           IconButton(
