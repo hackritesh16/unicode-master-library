@@ -4,7 +4,10 @@ import 'package:unicode_master_library/features/combining/presentation/combining
 
 void main() {
   testWidgets('Combining Lab lets users add and remove marks', (tester) async {
-    tester.view.physicalSize = const Size(900, 1800);
+    // The screen is a lazy ListView: widgets below the viewport (plus a small
+    // cache extent) are not built. Use a tall viewport so the whole screen,
+    // including the "Applied sequence" section at the bottom, is built.
+    tester.view.physicalSize = const Size(900, 4000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -13,7 +16,6 @@ void main() {
     expect(find.text('Combining Marks Lab'), findsOneWidget);
     expect(find.text('0 selected'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Combining Acute Accent'));
     await tester.tap(find.text('Combining Acute Accent'));
     await tester.pump();
 
