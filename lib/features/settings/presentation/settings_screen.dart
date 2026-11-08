@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../providers/unicode_db_provider.dart';
+import '../../../shared/widgets/glass_widgets.dart';
 
 String _statusLine(UnicodeDbState s) {
   switch (s.status) {
