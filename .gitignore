@@ -1,0 +1,4 @@
+*.sqlite
+*.db
+.dart_tool/
+build/
