@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../shared/widgets/glass_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../shared/widgets/glass_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
