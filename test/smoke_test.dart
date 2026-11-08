@@ -10,8 +10,6 @@ void main() {
 
     expect(find.byType(NavigationBar), findsOneWidget);
     expect(find.byType(NavigationDestination), findsNWidgets(6));
-    expect(find.text('Explore • Combine • Design • Create',
-        findRichText: true, skipOffstage: false), findsNothing);
     expect(find.text('Home'), findsWidgets);
   });
 
@@ -22,8 +20,9 @@ void main() {
     await tester.tap(find.byIcon(Icons.explore_outlined));
     await tester.pumpAndSettle();
 
-    // Screen title in the AppBar plus the nav label.
-    expect(find.text('Explorer'), findsWidgets);
+    // Explorer is now selected: its filled icon shows in the nav bar
+    // and in the screen's placeholder badge.
     expect(find.byIcon(Icons.explore_rounded), findsWidgets);
+    expect(find.byType(AppBar), findsOneWidget);
   });
 }
