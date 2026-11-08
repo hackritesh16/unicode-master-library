@@ -10,7 +10,7 @@
 | 6 | Name Designer | Implemented; CI verification pending |
 | 7 | Decorative Composer | Implemented; CI verification pending |
 | 8 | Emoji and symbol libraries | Implemented; CI verification pending |
-| 9 | Favorites, history, persistence | Not started |
+| 9 | Favorites, history, persistence | Implemented; CI verification pending |
 | 10 | UI polish, glass design system, testing, optimization and release | Not started |
 
 ## Phase 6 — Name Designer
@@ -35,6 +35,14 @@
 - Category filters, text/glyph search and one-tap copy.
 - Home quick-access dashboard links to all current tools.
 - Widget test covers category and search filtering.
+
+## Phase 9 — Favorites and History
+
+- SharedPreferences-backed local favorites and recent history.
+- Duplicate favorites are ignored; repeated history items move to the top.
+- History is capped at 60 items and can be cleared; favorites/history can be removed individually.
+- Library screen separates Favorites and History; symbol long-press toggles a saved favorite.
+- Unit tests cover duplicate favorites and history ordering/clearing.
 
 ## UI design requirement — premium dark glass
 
