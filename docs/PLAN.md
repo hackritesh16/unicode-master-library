@@ -3,7 +3,7 @@
 | Phase | Scope | Status |
 |---|---|---|
 | 1 | Repository inspection and architecture | Committed; not yet verified by CI |
-| 2 | Design system and navigation | Not started |
+| 2 | Design system and navigation | Committed; not yet verified by CI |
 | 3 | Unicode database pipeline | Not started |
 | 4 | Unicode Explorer | Not started |
 | 5 | Combining Marks Laboratory | Not started |
@@ -12,6 +12,10 @@
 | 8 | Emoji and symbol libraries | Not started |
 | 9 | Favorites, history, persistence | Not started |
 | 10 | Testing, optimization, release | Not started |
+
+## Phase 2 notes
+
+Delivered: dark theme and design tokens (`lib/core/theme`), go_router with a six-tab shell (`lib/core/router`, `lib/shared/widgets/app_shell.dart`), and six section screens. The section screens are honest placeholders (`PhasePlaceholder`) that name the phase delivering each feature; they contain no fake data. Not done in Phase 2: shared widgets such as character tile, copy button and search bar (added in the phases that first use them).
 
 ## Known limitations
 
