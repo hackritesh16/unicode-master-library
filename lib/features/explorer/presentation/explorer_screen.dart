@@ -64,6 +64,12 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(unicodeDbControllerProvider, (previous, next) {
+      if (next.status == UnicodeDbStatus.ready &&
+          previous?.status != UnicodeDbStatus.ready) {
+        _search();
+      }
+    });
     final database = ref.watch(unicodeDatabaseProvider);
     return Scaffold(
       appBar: AppBar(
@@ -81,14 +87,16 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
         error: (error, stack) => _DatabaseUnavailable(
           message: 'Could not open the Unicode database. $error',
         ),
-        data: (_) => ref.watch(unicodeDbControllerProvider).installedVersion ==
-                null
-            ? const _DatabaseUnavailable(
+        data: (_) => ref.watch(unicodeDbControllerProvider).status ==
+                UnicodeDbStatus.checking
+            ? const Center(child: CircularProgressIndicator())
+            : ref.watch(unicodeDbControllerProvider).installedVersion == null
+                ? const _DatabaseUnavailable(
                 message: 'Install the official Unicode database in Settings '
                     'before exploring characters.',
                 showSettings: true,
               )
-            : _buildExplorer(),
+                : _buildExplorer(),
       ),
     );
   }
