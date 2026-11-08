@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -38,7 +40,7 @@ class SettingsScreen extends ConsumerWidget {
         state.latestVersion != state.installedVersion;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: GlassAppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
