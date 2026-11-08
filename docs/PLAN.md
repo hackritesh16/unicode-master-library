@@ -2,11 +2,11 @@
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 | Repository inspection and architecture | Committed; not yet verified by CI |
-| 2 | Design system and navigation | Committed; not yet verified by CI |
-| 3 | Unicode database pipeline | Committed; not yet verified by CI |
-| 4 | Unicode Explorer | Implemented; awaiting CI and device verification |
-| 5 | Combining Marks Laboratory | Not started |
+| 1 | Repository inspection and architecture | Committed |
+| 2 | Design system and navigation | Committed |
+| 3 | Unicode database pipeline | Committed |
+| 4 | Unicode Explorer | Implemented; CI passing; device verification pending |
+| 5 | Combining Marks Laboratory | Implemented; CI verification pending |
 | 6 | Name Designer | Not started |
 | 7 | Decorative Composer | Not started |
 | 8 | Emoji and symbol libraries | Not started |
@@ -59,3 +59,18 @@ Implemented the first usable Unicode Explorer:
 - Repository tests cover name/block/script/code-point/literal search, range lookup, unassigned values and detail metadata.
 
 Verification still required: GitHub Actions must pass after this commit, and the first full UCD download/import plus search performance must be checked on a physical Android device. The Explorer currently returns at most 120 results per query; pagination and advanced filters are follow-up work.
+
+
+## Phase 5 notes
+
+Implemented an interactive Combining Marks Laboratory:
+
+- Editable base text with live preview.
+- Curated groups for common accents, below/overlay marks, and Devanagari marks.
+- Add/remove marks, clear the selection, and copy the resulting text.
+- Shows each mark's code point and canonical combining class (CCC).
+- Preserves selection order and explicitly explains that normalization is not performed.
+- Added a dedicated route and a shortcut from the Explorer app bar.
+- Added a widget test for selecting, displaying and clearing a mark.
+
+The mark list is an initial curated set, not the complete Unicode combining-mark inventory. A future data-backed iteration should load all marks and names from the installed UCD database.
