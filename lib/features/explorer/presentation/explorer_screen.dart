@@ -92,10 +92,10 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
             ? const Center(child: CircularProgressIndicator())
             : ref.watch(unicodeDbControllerProvider).installedVersion == null
                 ? const _DatabaseUnavailable(
-                message: 'Install the official Unicode database in Settings '
-                    'before exploring characters.',
-                showSettings: true,
-              )
+                    message: 'Install the official Unicode database in '
+                        'Settings before exploring characters.',
+                    showSettings: true,
+                  )
                 : _buildExplorer(),
       ),
     );
