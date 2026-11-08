@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,7 +96,7 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
   Widget build(BuildContext context) {
     final symbols = _visibleSymbols;
     return Scaffold(
-      appBar: AppBar(title: const Text('Emoji & Symbols')),
+      appBar: GlassAppBar(title: const Text('Emoji & Symbols')),
       body: Column(
         children: [
           Padding(
