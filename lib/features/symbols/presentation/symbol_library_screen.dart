@@ -95,7 +95,7 @@ class _SymbolLibraryScreenState extends State<SymbolLibraryScreen> {
   Widget build(BuildContext context) {
     final symbols = _visibleSymbols;
     return Scaffold(
-      appBar: GlassAppBar(title: const Text('Emoji & Symbols')),
+      appBar: const GlassAppBar(title: Text('Emoji & Symbols')),
       body: Column(
         children: [
           Padding(
