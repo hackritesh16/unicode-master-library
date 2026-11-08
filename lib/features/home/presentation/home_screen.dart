@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final actions = <({String title, String subtitle, IconData icon, String route})>[
+    const actions = <({String title, String subtitle, IconData icon, String route})>[
       (title: 'Unicode Explorer', subtitle: 'Find any character', icon: Icons.search_rounded, route: '/explorer'),
       (title: 'Name Studio', subtitle: 'Style your name', icon: Icons.auto_awesome_rounded, route: '/studio'),
       (title: 'Decorative Composer', subtitle: 'Build decorated text', icon: Icons.edit_rounded, route: '/composer'),
