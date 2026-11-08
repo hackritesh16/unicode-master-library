@@ -11,7 +11,7 @@
 | 7 | Decorative Composer | Implemented; CI verification pending |
 | 8 | Emoji and symbol libraries | Implemented; CI verification pending |
 | 9 | Favorites, history, persistence | Implemented; CI verification pending |
-| 10 | UI polish, glass design system, testing, optimization and release | Not started |
+| 10 | UI polish, glass design system, testing, optimization and release | Implemented; CI/device verification pending |
 
 ## Phase 6 — Name Designer
 
@@ -44,6 +44,13 @@
 - Library screen separates Favorites and History; symbol long-press toggles a saved favorite.
 - Unit tests cover duplicate favorites and history ordering/clearing.
 
+## Phase 10 — Glass UI polish
+
+- Reusable `GlassSurface`, `GlassAppBar` and `GlassButton` components.
+- Glass app bars across the main screens and translucent glass bottom navigation.
+- Composer actions use glass buttons; blur can be disabled on individual surfaces for performance fallback.
+- Final Android visual/performance verification remains pending.
+
 ## UI design requirement — premium dark glass
 
 The final app-wide visual treatment must use a consistent glass UI:
@@ -54,7 +61,7 @@ The final app-wide visual treatment must use a consistent glass UI:
 - Readable contrast, accessible touch targets and reduced-transparency fallbacks.
 - Consistent components/tokens; avoid stacking excessive blur layers.
 
-This is a scheduled UI design-system/polish task, not a reason to interrupt the current feature phase. Implement it when the UI polish phase is reached, then apply it consistently across all screens. The project is Flutter; Haze itself targets Jetpack Compose, so use Flutter-native glass rendering or a compatible Flutter library after checking maintenance, performance and Android support.
+This phase now uses reusable Flutter-native glass components: translucent surfaces, blurred app bars, a glass bottom navigation container and glass action buttons. A no-blur fallback is available on glass surfaces for lower-power devices. Haze itself targets Jetpack Compose and is not imported into this Flutter project.
 
 ## Verification and known limitations
 
