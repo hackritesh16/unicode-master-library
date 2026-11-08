@@ -25,7 +25,6 @@ class ExplorerEntry {
   final int combiningClass;
   final bool isRange;
 
-  String get glyph => String.fromCharCode(codePoint);
   String get code => formatCodePoint(codePoint);
 
   factory ExplorerEntry.fromCharacter(Map<String, Object?> row) =>
@@ -67,7 +66,14 @@ class UnicodeExplorerRepository {
       return rows.map(ExplorerEntry.fromCharacter).toList();
     }
 
-    final explicitCp = tryParseCodePointQuery(query);
+    final hasPrefix = query.toLowerCase().startsWith('u+') ||
+        query.toLowerCase().startsWith('0x');
+    final hexMatch = RegExp(r'^[0-9a-fA-F]+').matchAsPrefix(query)?.group(0);
+    final isBareHexCode = query.length > 1 && hexMatch == query;
+    final explicitCp = hasPrefix || isBareHexCode
+        ? tryParseCodePointQuery(query)
+        : null;
+    // Prefer a literal character for one-character input such as "A".
     final typedRune = query.runes.length == 1 ? query.runes.first : null;
     final cp = explicitCp ?? typedRune;
     if (cp != null && isUnicodeScalar(cp)) {
@@ -103,6 +109,7 @@ class UnicodeExplorerRepository {
       WHERE c.name LIKE ? COLLATE NOCASE
          OR c.block LIKE ? COLLATE NOCASE
          OR c.script LIKE ? COLLATE NOCASE
+         OR c.category LIKE ? COLLATE NOCASE
          OR EXISTS (
            SELECT 1 FROM name_aliases a
            WHERE a.cp = c.cp AND a.alias LIKE ? COLLATE NOCASE
@@ -112,7 +119,7 @@ class UnicodeExplorerRepository {
         c.cp ASC
       LIMIT ?
       ''',
-      [pattern, pattern, pattern, pattern, query, limit],
+      [pattern, pattern, pattern, pattern, pattern, query, limit],
     );
     return rows.map(ExplorerEntry.fromCharacter).toList();
   }
