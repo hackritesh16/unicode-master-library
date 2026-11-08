@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../shared/widgets/glass_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -17,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Unicode Master Library')),
+      appBar: GlassAppBar(title: const Text('Unicode Master Library')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
