@@ -37,8 +37,15 @@ void main() {
   });
 
   test('searches by block and script', () async {
-    expect((await explorer.search('Devanagari')).single.codePoint, 0x905);
-    expect((await explorer.search('Basic Latin')).single.codePoint, 0x41);
+    final devanagari = await explorer.search('Devanagari');
+    expect(devanagari.map((entry) => entry.codePoint), contains(0x905));
+    expect(devanagari, hasLength(1));
+
+    // A block query correctly returns every fixture character in Basic Latin,
+    // not just the first result.
+    final basicLatin = await explorer.search('Basic Latin');
+    expect(basicLatin.map((entry) => entry.codePoint), containsAll([0x0, 0x41]));
+    expect(basicLatin, hasLength(2));
   });
 
   test('accepts U+ notation and literal characters', () async {
