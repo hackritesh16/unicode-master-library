@@ -9,7 +9,7 @@
 | 5 | Combining Marks Laboratory | Implemented; CI/device verification pending |
 | 6 | Name Designer | Implemented; CI verification pending |
 | 7 | Decorative Composer | Implemented; CI verification pending |
-| 8 | Emoji and symbol libraries | Not started |
+| 8 | Emoji and symbol libraries | Implemented; CI verification pending |
 | 9 | Favorites, history, persistence | Not started |
 | 10 | UI polish, glass design system, testing, optimization and release | Not started |
 
@@ -28,6 +28,13 @@
 - Custom prefix and suffix fields override each frame independently.
 - Instant preview, reset action and one-tap copy.
 - Unit tests cover preset formatting, custom overrides and empty input; widget test covers live editing and frame selection.
+
+## Phase 8 — Emoji and Symbol Library
+
+- Curated Unicode emoji and symbol collection across faces, nature, hearts, stars, arrows, shapes and music.
+- Category filters, text/glyph search and one-tap copy.
+- Home quick-access dashboard links to all current tools.
+- Widget test covers category and search filtering.
 
 ## UI design requirement — premium dark glass
 
