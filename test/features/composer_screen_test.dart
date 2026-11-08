@@ -9,6 +9,13 @@ Finder preview(String value) => find.byWidgetPredicate(
 void main() {
   testWidgets('Composer updates preview when text and frame change',
       (tester) async {
+    // The screen is a lazy ListView: the live preview sits below the default
+    // 800x600 test viewport and would not be built. Use a tall viewport.
+    tester.view.physicalSize = const Size(900, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(const MaterialApp(home: ComposerScreen()));
 
     expect(find.text('Decorative Composer'), findsOneWidget);
@@ -18,7 +25,6 @@ void main() {
     await tester.pump();
     expect(preview('✦ NK Player ✦'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Royal'));
     await tester.tap(find.text('Royal'));
     await tester.pump();
     expect(preview('꧁༺ NK Player ༻꧂'), findsOneWidget);
