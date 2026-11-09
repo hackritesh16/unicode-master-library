@@ -79,6 +79,76 @@ class LibraryStorageService {
     await _write(_favoritesKey, entries);
   }
 
+  /// Saves the item, or removes it when it is already a favorite. Returns
+  /// true when the item is a favorite afterwards.
+  Future<bool> toggleFavorite({
+    required String kind,
+    required String title,
+    required String content,
+  }) async {
+    final entries = getFavorites();
+    final index = entries.indexWhere(
+      (entry) => entry.kind == kind && entry.content == content,
+    );
+    if (index >= 0) {
+      entries.removeAt(index);
+      await _write(_favoritesKey, entries);
+      return false;
+    }
+    await addFavorite(kind: kind, title: title, content: content);
+    return true;
+  }
+
+  /// Changes the title and/or content of a saved favorite. Returns false when
+  /// [id] does not exist.
+  Future<bool> updateFavorite(
+    String id, {
+    String? title,
+    String? content,
+  }) async {
+    final entries = getFavorites();
+    final index = entries.indexWhere((entry) => entry.id == id);
+    if (index < 0) {
+      return false;
+    }
+    final old = entries[index];
+    entries[index] = LibraryEntry(
+      id: old.id,
+      kind: old.kind,
+      title: title ?? old.title,
+      content: content ?? old.content,
+      savedAt: old.savedAt,
+    );
+    await _write(_favoritesKey, entries);
+    return true;
+  }
+
+  /// Inserts a copy of the favorite right below it, titled "<title> copy".
+  /// Returns the new entry, or null when [id] does not exist.
+  Future<LibraryEntry?> duplicateFavorite(String id) async {
+    final entries = getFavorites();
+    final index = entries.indexWhere((entry) => entry.id == id);
+    if (index < 0) {
+      return null;
+    }
+    final old = entries[index];
+    final now = DateTime.now();
+    var newId = '${now.microsecondsSinceEpoch}';
+    while (entries.any((entry) => entry.id == newId)) {
+      newId = '${newId}1';
+    }
+    final copy = LibraryEntry(
+      id: newId,
+      kind: old.kind,
+      title: '${old.title} copy',
+      content: old.content,
+      savedAt: now,
+    );
+    entries.insert(index + 1, copy);
+    await _write(_favoritesKey, entries);
+    return copy;
+  }
+
   Future<void> addHistory({
     required String kind,
     required String title,
