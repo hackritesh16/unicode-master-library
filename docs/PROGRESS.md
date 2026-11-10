@@ -5,59 +5,51 @@ Source of truth for how much of `docs/MASTER_PROMPT.md` is done.
 
 Legend: `DONE` works, tested, CI green. `PARTIAL` exists but incomplete or untested. `MISSING` not started. `BROKEN` exists but fails.
 
-Last audit: 2026-11-10 (continued by ChatGPT; repository tree, PR diff, CI jobs and code inspected; no device testing).
+Last audit: 2026-11-10 (Claude via GitHub connector; repository tree, PR list, CI runs and workflow logs inspected; no device testing, no local Flutter run).
 Estimated completion of the whole master prompt: about 30 to 35 percent. This is a rough estimate.
 
 ## Phase table
 
 | Phase | Name | Status | Evidence and gaps |
 |---|---|---|---|
-| 0 | Stabilize and housekeeping | PARTIAL | `main` CI was green at last check (analyze plus about 60 tests). Manual `build.yml` produced an APK (run 1, success). PR #1 (Name Studio engine) is still a draft and its latest CI run was red. README is stale, `docs/PLAN.md` is stale, no LICENSE, no `docs/DECISIONS.md`. `android/` is generated in CI, not committed. |
-| 1 | Unicode data foundation | PARTIAL | Done: UCD parsers, schema, transactional importer, downloader with version detection, Settings screen to install and update, Explorer repository (search by name, character, U+ code point, block, script, category; unexpanded range lookup; details with aliases, properties, UTF-8). Gaps: parsers never tested on the real UCD files (fixtures only), no block listing with counts verified, no Unicode version filter, no search suggestions or recent searches, no offline test, import performance unmeasured on a phone. |
+| 0 | Stabilize and housekeeping | PARTIAL | `main` CI green at `3623e8e` and earlier (runs #152 to #154 success; #155 was still running at write time). README, PLAN, DECISIONS and LICENSE (MIT) exist; SOURCES.md has credits. Open: PR #1 not merged (CI green on its branch, run #144, but based on old main and not fully reviewed); `android/` still generated in CI. |
+| 1 | Unicode data foundation | PARTIAL | Real-data check now passes: `data-check.yml` run #2 succeeded (real UCD downloaded, parsed and imported into in-memory SQLite, assertions on counts, version, blocks, U+0307 passed): https://github.com/hackritesh16/unicode-master-library/actions/runs/42780126733. Still open: block listing with counts, Unicode version filter, search suggestions and recents, offline test, import performance on a phone. |
 | 2 | Style Palette dataset and categorizer | MISSING | Nothing exists. |
-| 3 | Style engine | PARTIAL | Only font-style transforms exist (`lib/core/unicode/name_styles.dart`: bold, monospace, fullwidth, circled, small caps, with tests). No grapheme-based mark engine, line spans or mirroring. |
-| 4 | Style Studio UI | PARTIAL | A basic Combining Lab screen exists (select marks, see the code point sequence). No category palette, per-letter stacks, line spans or presets. |
-| 5 | Name Generator | PARTIAL | `main` has a basic Name Studio (font styles). The real engine (15 themes, 23 font styles, mixed fonts, marks, emoji pairs, frames, uniqueness, export and share) is in draft PR #1, unmerged, CI red. |
-| 6 | Classic Pad core | MISSING | The current Composer only has frame presets, prefix, suffix, preview, copy and save. No character grid, tabs, Detail view, undo and redo, or sessions. |
+| 3 | Style engine | PARTIAL | Only font-style transforms exist (`lib/core/unicode/name_styles.dart`). Grapheme mark engine exists only in PR #1 (`lib/core/text_design/`). |
+| 4 | Style Studio UI | PARTIAL | A basic Combining Lab screen exists. No category palette, per-letter stacks, line spans or presets. |
+| 5 | Name Generator | PARTIAL | Basic Name Studio on `main`. Real engine (15 themes, 23 font styles, uniqueness, export, share) is in draft PR #1. |
+| 6 | Classic Pad core | MISSING | No character grid, tabs, Detail view, undo and redo, or sessions. |
 | 7 | Classic Pad advanced | MISSING | Nothing exists. |
-| 8 | Emoji library and Explorer polish | PARTIAL | Explorer screen exists; Symbols library screen exists (basic). Emoji sequences are imported into the database but there is no Emoji screen. |
-| 9 | Library, history, export, share | PARTIAL | `library_storage_service.dart` and a Library screen exist (favorites and history storage). Export, import and share are only in PR #1. |
+| 8 | Emoji library and Explorer polish | PARTIAL | Explorer and a basic Symbols screen exist. Emoji sequences are imported but there is no Emoji screen. |
+| 9 | Library, history, export, share | PARTIAL | Library storage and screen exist. Export, import and share are only in PR #1. |
 | 10 | Android integration | MISSING | Nothing exists. |
-| 11 | Glass UI completion | PARTIAL | Glass components and ambient background exist; applied to Home, navigation bar and app bars. Other screens still use solid cards. |
-| 12 | QA, docs, release | MISSING | Manual APK workflow exists; no release signing, no final docs, no device testing. |
+| 11 | Glass UI completion | PARTIAL | Applied to Home, navigation bar and app bars only. |
+| 12 | QA, docs, release | MISSING | Manual APK workflow exists (run #1 success); no release signing, no final docs, no device testing. |
 
 ## Checklist details
 
-Use the item IDs from `docs/MASTER_PROMPT.md` (P0.1 and so on). When an item changes, record it here.
-
 | Item | Status | Note |
 |---|---|---|
-| P0.1 PR #1 | BROKEN | Draft, CI red at commit 46f9537. |
-| P1.1 Real-data check | MISSING | `data-check.yml` does not exist. |
+| P0.1 PR #1 | PARTIAL | Draft. Branch CI green (run #144 at 18e81d7) but base is old main (7e5c50f). 25 files, +5348/-59. Overlaps main in `ci.yml`, `pubspec.yaml`, `name_studio_screen.dart`, `library_storage_service.dart`. Needs full diff review and rebase or port before merge. |
+| P0.2 README | DONE | Rewritten earlier today; CI green. |
+| P0.3 PLAN pointer | DONE | Points to this tracker. |
+| P0.4 DECISIONS | DONE | `docs/DECISIONS.md` exists and is kept current. |
+| P0.5 LICENSE and credits | DONE | MIT `LICENSE` added (owner said any license is fine); SOURCES.md credits Unicode, UnicodePad (Apache-2.0, reference only) and font policy. |
+| P0.6 android/ folder | MISSING | Decision not made yet. |
+| P1.1 Real-data check | DONE | `data-check.yml` run #2 success (runs `flutter test tool_test/real_ucd_test.dart`). First attempt failed because `dart run` cannot load Flutter packages; fixed. |
 | P1.2 Classification model | PARTIAL | Range lookup and unassigned handling exist in the Explorer repository; verify a dedicated model. |
-| P1.3 Repository APIs | PARTIAL | Search and details exist; block listing, version filter, combining-class paging unverified. |
+| P1.3 Repository APIs | PARTIAL | Search and details exist; block listing with counts, version filter, combining-class paging unverified. |
 | P1.6 Search | PARTIAL | Search exists; suggestions and recents missing. |
 | P3.7 Font transforms | PARTIAL | Five styles on `main`; PR #1 has 23. |
 
 ## Audit log
 
-- 2026-11-10: first audit and creation of this tracker. APK build workflow succeeded once. Next agent should start with Phase 0 (resolve PR #1, fix docs), then Phase 1 real-data check, then Phase 2.
+- 2026-11-10: first audit and creation of this tracker. APK build workflow succeeded once.
+- 2026-11-10 (later): PR #1 branch CI turned green (#144). Real-UCD check added and fixed; passes on real files. MIT license added.
 
-## Latest repository audit — 2026-11-10
+## Next
 
-- Current main commit before this documentation update: bdcc15c9519e1cc9d24794b136f285b0f9e68ffc.
-- Latest main CI at audit time: run #141, success — https://github.com/hackritesh16/unicode-master-library/actions/runs/42774214307.
-- Manual APK workflow: run #1, success — https://github.com/hackritesh16/unicode-master-library/actions/runs/42770512793. This confirms the workflow built an APK; it does not confirm real-device installation or visual testing.
-- Open PR #1 (claude/name-designer-engine) is still draft and its latest recorded CI run #135 failed — https://github.com/hackritesh16/unicode-master-library/actions/runs/42548329490. Review its diff and failure logs before using or merging it.
-- Open branches at audit: main and claude/name-designer-engine.
-- The master prompt was extended with a strict execution contract: every AI must inspect the real app, audit current CI/PRs, verify each feature, follow phase dependencies, and never claim unverified work as done.
-- Next priority remains Phase 0: inspect and resolve the draft Name Studio PR safely, then perform the Phase 1 real-UCD data check. Do not start the Style Palette as if the data foundation were complete.
-
-
-## Work completed in this session — 2026-11-10
-
-- **Phase 0 docs:** README rewritten; PLAN now points to the authoritative master prompt and progress tracker; DECISIONS.md created. CI is pending for these commits at the time of this update.
-- **PR #1 review:** inspected its 25-file diff (5,348 additions, 59 deletions) and failed CI log. The engine and test coverage are substantial; the only recorded test failure was a duplicate compatibility-disclaimer finder in name_studio_test.dart. Fixed that assertion on the PR branch; run #144 is pending. PR remains draft and must not be merged until its complete diff is reviewed against current main and CI is green.
-- **Phase 1:** added tools/check_real_ucd.dart and manual workflow .github/workflows/data-check.yml. The workflow downloads official latest UCD files and parses/imports them into in-memory SQLite with count and known-record assertions. It has not yet been manually dispatched, so real-data validation remains PARTIAL.
-- **Main CI:** run #143 passed for the prompt/progress update. New main commits for README, PLAN, DECISIONS, and real-data validation have pending CI runs (#145–#148).
-- **Next:** check all pending main and PR CI runs; fix any failures. Then run the manual real-data workflow from GitHub Actions and fix parser/import defects it exposes. Do not mark Phase 1 complete until that workflow passes.
+1. Confirm CI for the latest `main` commit is green.
+2. P0.1: review the full PR #1 diff against current `main` and port or rebase it safely. Do not merge while it is a draft or red.
+3. Phase 1 gaps: block listing with counts, Unicode version filter, offline test, search suggestions.
+4. Then Phase 2 (Style Palette).
