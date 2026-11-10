@@ -33,6 +33,10 @@ GoRouter createRouter() {
         path: '/symbols',
         builder: (context, state) => const SymbolLibraryScreen(),
       ),
+      GoRoute(
+        path: '/style-palette',
+        builder: (context, state) => const StylePaletteScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
