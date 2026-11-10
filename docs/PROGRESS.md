@@ -5,15 +5,15 @@ Source of truth for how much of `docs/MASTER_PROMPT.md` is done.
 
 Legend: `DONE` works, tested, CI green. `PARTIAL` exists but incomplete or untested. `MISSING` not started. `BROKEN` exists but fails.
 
-Last audit: 2026-11-10 (GitHub repository tree, PR diff and CI inspected; main CI #168 passed at `6ad46d9`; real-UCD workflow #2 passed; no device testing, nothing run locally).
+Last audit: 2026-11-10 (second audit, after commit `468bbf8`): repository tree, commit `468bbf8` (four files added: code point classification, library repository, and their tests) and CI inspected. CI #170 passed on `468bbf8`; real-UCD workflow #2 passed earlier. No device testing, nothing run locally.
 Estimated completion of the whole master prompt: about 35 to 40 percent. This is a rough estimate.
 
 ## Phase table
 
 | Phase | Name | Status | Evidence and gaps |
 |---|---|---|---|
-| 0 | Stabilize and housekeeping | PARTIAL | PR #1 merged; `main` CI green at `6ad46d9` (run #168: analyze plus all tests). README, PLAN, DECISIONS and LICENSE (MIT) exist; SOURCES.md has credits. Open: `android/` still generated in CI (P0.6). |
-| 1 | Unicode data foundation | PARTIAL | Real-data check passes: `data-check.yml` run #2 succeeded (real UCD downloaded, parsed and imported into in-memory SQLite, assertions on counts, version, blocks, U+0307 passed): https://github.com/hackritesh16/unicode-master-library/actions/runs/42780126733. Still open: block listing with counts, Unicode version filter, search suggestions and recents, offline test, import performance on a phone. |
+| 0 | Stabilize and housekeeping | PARTIAL | PR #1 merged; `main` CI green at `468bbf8` (run #170: analyze plus all tests). README, PLAN, DECISIONS and LICENSE (MIT) exist; SOURCES.md has credits. Open: `android/` still generated in CI (P0.6). |
+| 1 | Unicode data foundation | PARTIAL | Real-data check passes: `data-check.yml` run #2 succeeded (real UCD downloaded, parsed and imported into in-memory SQLite, assertions on counts, version, blocks, U+0307 passed): https://github.com/hackritesh16/unicode-master-library/actions/runs/42780126733. Repository layer in `lib/database/unicode_library_repository.dart` (commit `468bbf8`, tested in CI #170): block listing with assigned counts, paginated browse by block, category, script or combining class, Unicode version filter, version list, and classification of any code point. No screen uses it yet. Still open: offline test, search suggestions and recents, import performance on a phone. |
 | 2 | Style Palette dataset and categorizer | PARTIAL | `lib/core/text_design/style_palette.dart` adds a small curated catalog (94 lines) with name/glyph/code-point search and category filtering. `StylePaletteScreen` is registered at `/style-palette` and linked from Emoji & Symbols. Unit and widget tests exist and pass in CI #168. Still missing: UCD-derived categorizer, `style_palette` DB table, curated JSON overlay, real-data category assertions, broader categories. |
 | 3 | Style engine | PARTIAL | Grapheme splitting, combining-mark catalog with render-risk flags, sequence-problem checks and 23 font-style transforms are on `main` (from PR #1, in `lib/core/text_design/`). Per-letter mark stacks, line spans, mirror mode and presets (P3.2 to P3.5, P3.9) not verified as complete. |
 | 4 | Style Studio UI | PARTIAL | A basic Combining Lab screen exists. No category palette, per-letter stacks, line spans or presets. |
@@ -37,8 +37,8 @@ Estimated completion of the whole master prompt: about 35 to 40 percent. This is
 | P0.5 LICENSE and credits | DONE | MIT `LICENSE` added (owner said any license is fine); SOURCES.md credits Unicode, UnicodePad (Apache-2.0, reference only) and font policy. |
 | P0.6 android/ folder | MISSING | Decision not made yet. |
 | P1.1 Real-data check | DONE | `data-check.yml` run #2 success (runs `flutter test tool_test/real_ucd_test.dart`). First attempt failed because `dart run` cannot load Flutter packages; fixed. |
-| P1.2 Classification model | PARTIAL | Range lookup and unassigned handling exist in the Explorer repository; verify a dedicated model. |
-| P1.3 Repository APIs | PARTIAL | Search and details exist; block listing with counts, version filter, combining-class paging unverified. |
+| P1.2 Classification model | DONE | `lib/core/unicode/code_point_class.dart` (enum `CodePointClass` and a classifier for assigned, unassigned, private use, control, surrogate and noncharacter code points), plus `classify` in the library repository. Unit tests in commit `468bbf8`, CI #170 green. |
+| P1.3 Repository APIs | DONE | Block listing with counts, paginated browse by block, category, script and combining class, Unicode version filter (`maxAge`) and `availableAgeVersions` in `unicode_library_repository.dart`, tested in CI #170. Repository only: no screen uses these yet. |
 | P1.6 Search | PARTIAL | Search exists; suggestions and recents missing. |
 | P2.1 Curated Style Palette | PARTIAL | Catalog, `/style-palette` screen and link added; tests cover combining preview/copy distinction, name/glyph/code search and category filtering. CI #168 green. |
 | P3.1 Grapheme segmentation | DONE | `lib/core/text_design/graphemes.dart` (package `characters`) with tests, in CI #168. ZWJ emoji and Devanagari cases are covered by the PR #1 tests; not re-verified individually. |
@@ -49,10 +49,11 @@ Estimated completion of the whole master prompt: about 35 to 40 percent. This is
 - 2026-11-10: first audit and creation of this tracker. APK build workflow succeeded once.
 - 2026-11-10 (later): PR #1 branch CI turned green (#144). Real-UCD check added and fixed; passes on real files. MIT license added.
 - 2026-11-10 (later still): PR #1 merged. Another agent pushed Style Palette commits at the same time; they left 2 analyze warnings (unused imports, route not registered) that kept main red. Fixed; main green at #168. Note: an earlier tracker line said the route is `/palette`; the actual route is `/style-palette`.
+- 2026-11-10 (second audit): `main` moved to `468bbf8` (Phase 1 repository layer, four files added). Verified the added files and tests against the commit; CI #170 green. P1.2 and P1.3 moved to DONE at repository level. No existing file changed, so no screen uses the new APIs yet.
 
 ## Next
 
-1. Phase 1 gaps: block listing with counts, Unicode version filter, offline test, search suggestions.
+1. Phase 1 gaps: wire the block browser and version filter into a screen, offline test, search suggestions and recents.
 2. Phase 2: UCD-derived categorizer and `style_palette` table, curated JSON overlay, real-data category assertions (extend `tool_test/real_ucd_test.dart`).
 3. Phase 3/4: per-letter mark stacks, line spans, mirror mode, then Style Studio UI.
 4. P0.6: decide whether to commit `android/`.
