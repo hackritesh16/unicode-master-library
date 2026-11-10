@@ -14,7 +14,7 @@ Estimated completion of the whole master prompt: about 30 to 35 percent. This is
 |---|---|---|---|
 | 0 | Stabilize and housekeeping | PARTIAL | `main` CI green at `3623e8e` and earlier (runs #152 to #154 success; #155 was still running at write time). README, PLAN, DECISIONS and LICENSE (MIT) exist; SOURCES.md has credits. Open: PR #1 not merged (CI green on its branch, run #144, but based on old main and not fully reviewed); `android/` still generated in CI. |
 | 1 | Unicode data foundation | PARTIAL | Real-data check now passes: `data-check.yml` run #2 succeeded (real UCD downloaded, parsed and imported into in-memory SQLite, assertions on counts, version, blocks, U+0307 passed): https://github.com/hackritesh16/unicode-master-library/actions/runs/42780126733. Still open: block listing with counts, Unicode version filter, search suggestions and recents, offline test, import performance on a phone. |
-| 2 | Style Palette dataset and categorizer | PARTIAL | `lib/core/text_design/style_palette.dart` adds a curated catalog of combining, overlay, enclosing, star, heart, arrow, shape and music entries with name/glyph/code-point search and category filtering. Tests added; dynamic full-UCD validation and broader category coverage remain open. |
+| 2 | Style Palette dataset and categorizer | PARTIAL | `lib/core/text_design/style_palette.dart` adds a curated catalog with name/glyph/code-point search and category filtering. `StylePaletteScreen` is registered at `/palette` and linked from Emoji & Symbols. Unit and widget tests added; dynamic full-UCD validation and broader category coverage remain open. |
 | 3 | Style engine | PARTIAL | Main still has basic font transforms. Style Palette distinguishes combining-mark copy values from dotted-circle previews; per-letter application, grapheme-safe stacking and presets remain open. |
 | 4 | Style Studio UI | PARTIAL | A basic Combining Lab screen exists. No category palette, per-letter stacks, line spans or presets. |
 | 5 | Name Generator | PARTIAL | Basic Name Studio on `main`. Real engine (15 themes, 23 font styles, uniqueness, export, share) is in draft PR #1. |
@@ -40,7 +40,7 @@ Estimated completion of the whole master prompt: about 30 to 35 percent. This is
 | P1.2 Classification model | PARTIAL | Range lookup and unassigned handling exist in the Explorer repository; verify a dedicated model. |
 | P1.3 Repository APIs | PARTIAL | Search and details exist; block listing with counts, version filter, combining-class paging unverified. |
 | P1.6 Search | PARTIAL | Search exists; suggestions and recents missing. |
-| P2.1 Curated Style Palette | PARTIAL | `lib/core/text_design/style_palette.dart`; `test/core/style_palette_test.dart` covers combining preview/copy distinction, name/glyph/code search, category filtering and duplicate code points. Latest CI after these commits still pending. |
+| P2.1 Curated Style Palette | PARTIAL | Catalog, `/palette` screen and navigation link added. Unit/widget tests cover combining preview/copy distinction, name/glyph/code search and category filtering. Latest CI still pending. |
 
 ## Audit log
 
