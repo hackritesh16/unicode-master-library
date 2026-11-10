@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/composer/presentation/composer_screen.dart';
 import '../../features/combining/presentation/combining_lab_screen.dart';
+import '../../features/explorer/presentation/block_characters_screen.dart';
+import '../../features/explorer/presentation/blocks_screen.dart';
 import '../../features/explorer/presentation/explorer_screen.dart';
 import '../../features/favorites/presentation/library_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
@@ -28,6 +30,16 @@ GoRouter createRouter() {
       GoRoute(
         path: '/combining',
         builder: (context, state) => const CombiningLabScreen(),
+      ),
+      GoRoute(
+        path: '/blocks',
+        builder: (context, state) => const BlocksScreen(),
+      ),
+      GoRoute(
+        path: '/block',
+        builder: (context, state) => BlockCharactersScreen(
+          blockName: state.uri.queryParameters['name'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/symbols',
