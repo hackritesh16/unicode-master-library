@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:unicode_master_library/core/unicode/ucd_bundle.dart';
 import 'package:unicode_master_library/core/unicode/ucd_parsers.dart';
