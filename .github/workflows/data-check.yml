@@ -40,4 +40,4 @@ jobs:
           emoji-test.txt|emoji/emoji-test.txt
           FILES
       - name: Parse and import real UCD into in-memory SQLite
-        run: dart run tools/check_real_ucd.dart
+        run: flutter test tool_test/real_ucd_test.dart
