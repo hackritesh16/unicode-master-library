@@ -1,4 +1,4 @@
-import '../../unicode/code_point.dart';
+import '../unicode/code_point.dart';
 
 /// A curated, searchable entry for the Style Palette.
 ///
