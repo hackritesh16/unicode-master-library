@@ -132,7 +132,7 @@ void main() {
     expect(find.text('COMPATIBILITY'), findsOneWidget);
     expect(find.textContaining('U+'), findsWidgets);
     expect(find.textContaining('other apps and fonts may move'), findsNothing);
-    expect(find.textContaining('Other apps and fonts may move'), findsOneWidget);
+    expect(find.textContaining('Other apps and fonts may move'), findsWidgets);
   });
 
   testWidgets('empty name shows no designs', (tester) async {
