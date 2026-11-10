@@ -235,3 +235,62 @@ Done when: the app installs from the built APK, downloads Unicode data once, the
 3. What is not verified (device, real data, performance).
 4. Updated completion estimate and the updated phase table.
 5. Next step and any single question for the owner.
+---
+
+## PART F. STRICT EXECUTION CONTRACT FOR EVERY AI AGENT
+
+This section overrides any vague instruction to improve the app. Follow it on every new chat and every work session.
+
+### F1. Start by understanding the actual app
+
+- The repository's current code is the truth; this prompt and progress tracker are plans, not proof that a feature exists.
+- Before coding, inspect the current implementation of the relevant screen, its domain logic, providers, persistence, tests, navigation and dependencies. Trace the complete user flow.
+- For a feature claimed as implemented, verify that it is reachable from the UI, performs the real action, persists correctly where required, handles empty/error states, and has tests. A screen title, placeholder, hardcoded demo list or TODO is not implementation.
+- Compare the current app against the owner's reference screenshots and the UnicodePad upstream app. Keep the reference behavior, but improve usability and visual quality without copying its UI blindly.
+- Never start from an old audit if newer commits or CI runs exist. Re-check main, open PRs, branches and latest workflow runs each session.
+
+### F2. Required audit output before implementation
+
+Give the owner a concise audit containing:
+1. Current main commit and latest CI result/link.
+2. Open PRs/branches that may contain useful work or conflicts.
+3. A phase table with DONE, PARTIAL, MISSING or BROKEN, backed by file/test/CI evidence.
+4. The exact first incomplete task and why it is next.
+5. Any blocker that genuinely needs the owner's decision.
+
+Do not spend the whole session writing another plan. After the audit, immediately implement the highest-priority unblocked task unless the owner explicitly asked only for analysis.
+
+### F3. Phase execution rules
+
+- Work in dependency order: Phase 0 baseline and existing PR review; Phase 1 real Unicode data; Phase 2 palette dataset; Phase 3 engine; Phase 4 Style Studio; Phase 5 generator; Phases 6–7 Classic Pad parity; Phases 8–9 libraries and persistence; Phase 10 Android integration; Phase 11 UI polish; Phase 12 release QA.
+- Do not skip a foundational phase just because a later screen is visually attractive. If a later phase is started early, record the dependency and do not call it complete until its foundations are complete.
+- Break each phase into small tasks. For each task: inspect, implement, add or adjust tests, run analyze and tests, fix failures, commit, update docs/PROGRESS.md.
+- Do not replace existing working features with placeholders or remove them to make a new screen easier.
+- If an existing PR contains useful work, inspect its complete diff and CI logs. Do not merge a draft or red-CI PR merely because the prompt mentions it. Port only the useful, reviewed parts if that is safer.
+- Use real UCD data for the character and style libraries. Curated samples may supplement the database but must never masquerade as the complete Unicode library.
+
+### F4. Required quality for the main user journeys
+
+**Classic Pad journey:** user types text, places the caret, browses Recent/List/Find/Input/Emoji/Favorite and custom tabs, taps a glyph to insert at the caret, long-presses for details, then copies or shares the exact output. Undo/redo, backspace, font choice and sessions must work.
+
+**Style Palette journey:** user opens a clearly named category (for example dots, underlines, overlines, combining marks, arrows, x-marks, enclosing marks, brackets, flowers or symbols), previews and searches characters, then copies or inserts one. Favorites and recents must be available.
+
+**Name Designer journey:** user types a name, selects a letter or range, applies above/below/overlay/enclosing marks, adds line spans and end decorations, adjusts intensity and symmetry, previews instantly, then copies or saves the exact Unicode string. It must support mixed scripts and emoji clusters without corrupting text.
+
+**Name Generator journey:** user enters a name, selects a theme and intensity, generates varied readable designs, and can copy/save/share individual results. Repeated results in one batch must be unique unless the user explicitly requests duplicates.
+
+### F5. Done means verified
+
+A task is DONE only when:
+- Its real user-facing behavior is implemented (not a mock or placeholder).
+- Relevant unit/widget/database tests exist and pass.
+- flutter analyze passes with no new infos or warnings.
+- The latest CI run for the commit is green.
+- Any device-only requirement is either tested on a real Android device/emulator or explicitly marked NOT DEVICE-TESTED.
+- docs/PROGRESS.md and relevant user/developer documentation match the actual code.
+
+Never fabricate screenshots, test output, CI status, APK availability, device verification, repository changes or commit hashes. If a tool cannot perform a step, state the limitation and give the next practical action.
+
+### F6. Keep owner communication short
+
+The owner prefers concise Hinglish updates. Do not send a huge explanation after every small commit. Report only: what was done, commit/PR link, CI status, what remains unverified, and the next task. Ask at most one essential question; otherwise make a sensible reversible decision and record it in docs/DECISIONS.md.
