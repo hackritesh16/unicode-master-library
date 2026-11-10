@@ -5,7 +5,7 @@ Source of truth for how much of `docs/MASTER_PROMPT.md` is done.
 
 Legend: `DONE` works, tested, CI green. `PARTIAL` exists but incomplete or untested. `MISSING` not started. `BROKEN` exists but fails.
 
-Last audit: 2026-11-10 by Claude (from repository tree, test names, CI runs and PR list; no device testing).
+Last audit: 2026-11-10 (continued by ChatGPT; repository tree, PR diff, CI jobs and code inspected; no device testing).
 Estimated completion of the whole master prompt: about 30 to 35 percent. This is a rough estimate.
 
 ## Phase table
@@ -52,3 +52,12 @@ Use the item IDs from `docs/MASTER_PROMPT.md` (P0.1 and so on). When an item cha
 - Open branches at audit: main and claude/name-designer-engine.
 - The master prompt was extended with a strict execution contract: every AI must inspect the real app, audit current CI/PRs, verify each feature, follow phase dependencies, and never claim unverified work as done.
 - Next priority remains Phase 0: inspect and resolve the draft Name Studio PR safely, then perform the Phase 1 real-UCD data check. Do not start the Style Palette as if the data foundation were complete.
+
+
+## Work completed in this session — 2026-11-10
+
+- **Phase 0 docs:** README rewritten; PLAN now points to the authoritative master prompt and progress tracker; DECISIONS.md created. CI is pending for these commits at the time of this update.
+- **PR #1 review:** inspected its 25-file diff (5,348 additions, 59 deletions) and failed CI log. The engine and test coverage are substantial; the only recorded test failure was a duplicate compatibility-disclaimer finder in name_studio_test.dart. Fixed that assertion on the PR branch; run #144 is pending. PR remains draft and must not be merged until its complete diff is reviewed against current main and CI is green.
+- **Phase 1:** added tools/check_real_ucd.dart and manual workflow .github/workflows/data-check.yml. The workflow downloads official latest UCD files and parses/imports them into in-memory SQLite with count and known-record assertions. It has not yet been manually dispatched, so real-data validation remains PARTIAL.
+- **Main CI:** run #143 passed for the prompt/progress update. New main commits for README, PLAN, DECISIONS, and real-data validation have pending CI runs (#145–#148).
+- **Next:** check all pending main and PR CI runs; fix any failures. Then run the manual real-data workflow from GitHub Actions and fix parser/import defects it exposes. Do not mark Phase 1 complete until that workflow passes.
