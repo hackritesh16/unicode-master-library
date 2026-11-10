@@ -25,4 +25,6 @@ jobs:
           fi
       - run: flutter pub get
       - run: flutter analyze
+      - name: Preview generated designs (for review in the log)
+        run: dart run tools/preview_designs.dart
       - run: flutter test
