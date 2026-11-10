@@ -77,6 +77,11 @@ class _ExplorerScreenState extends ConsumerState<ExplorerScreen> {
         title: const Text('Unicode Explorer'),
         actions: [
           IconButton(
+            tooltip: 'Browse Unicode blocks',
+            onPressed: () => context.push('/blocks'),
+            icon: const Icon(Icons.grid_view_rounded),
+          ),
+          IconButton(
             tooltip: 'Combining Marks Lab',
             onPressed: () => context.push('/combining'),
             icon: const Icon(Icons.science_outlined),
