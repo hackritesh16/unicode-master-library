@@ -1,0 +1,43 @@
+name: Unicode real-data check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  real-ucd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Install SQLite
+        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
+      - run: flutter pub get
+      - name: Download official Unicode Character Database files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/ucd
+          base="https://www.unicode.org/Public/UCD/latest"
+          curl --fail --location --retry 3 "$base/ReadMe.txt" -o build/ucd/ReadMe.txt
+          while IFS='|' read -r name path; do
+            curl --fail --location --retry 3 "$base/$path" -o "build/ucd/$name"
+          done <<'FILES'
+          UnicodeData.txt|ucd/UnicodeData.txt
+          Blocks.txt|ucd/Blocks.txt
+          Scripts.txt|ucd/Scripts.txt
+          DerivedAge.txt|ucd/DerivedAge.txt
+          PropList.txt|ucd/PropList.txt
+          DerivedCoreProperties.txt|ucd/DerivedCoreProperties.txt
+          EastAsianWidth.txt|ucd/EastAsianWidth.txt
+          NameAliases.txt|ucd/NameAliases.txt
+          emoji-data.txt|ucd/emoji/emoji-data.txt
+          emoji-test.txt|emoji/emoji-test.txt
+          FILES
+      - name: Parse and import real UCD into in-memory SQLite
+        run: dart run tools/check_real_ucd.dart
